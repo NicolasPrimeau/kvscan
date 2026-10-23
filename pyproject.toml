@@ -5,7 +5,18 @@ description = "Find the layers of an LLM that break under a quantized KV cache, 
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
+authors = [{ name = "Nicolas Primeau" }]
+keywords = ["llm", "kv-cache", "quantization", "vllm", "llama.cpp", "inference"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Environment :: Console",
+]
 dependencies = ["torch>=2.4", "transformers>=5.0", "safetensors", "huggingface_hub", "numpy"]
+
+[project.urls]
+Homepage = "https://github.com/NicolasPrimeau/kvscan"
+Issues = "https://github.com/NicolasPrimeau/kvscan/issues"
 
 [project.scripts]
 kvscan = "kvscan.cli:main"
@@ -13,3 +24,6 @@ kvscan = "kvscan.cli:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["kvscan"]
