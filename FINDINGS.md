@@ -84,7 +84,18 @@ sensitivity tell a codec where error is inaudible?
 
 ## 5. vLLM `int4_per_token_head`
 
-<!-- filled from results/qwen2.5-1.5b_int4.json -->
+Simulated vLLM `int4_per_token_head` (current kernel, without the key-bias correction proposed in #59674).
+Qwen2.5-1.5B, 4 × 512 held-out tokens, everything quantized except the skipped layers:
+
+| skip layers | rule | KL |
+|---|---|---|
+| none | uniform int4 | 5.65 (broken) |
+| 0, 1, 26, 27 | first/last 2 (TurboQuant's fixed rule) | 0.058 |
+| **0, 1, 7, 15** | **measured top-4 (kvscan)** | **0.019** (3.1× lower at the same cost) |
+| 0, 1, 2, 6, 7, 9, 15, 18 | kvscan, target KL 0.01 | 0.012 |
+
+The last layers (26, 27) are among the *least* sensitive on this model (layer 27 keys: 1e-4).
+Not yet validated inside vLLM itself.
 
 ## Related work and upstream status
 
