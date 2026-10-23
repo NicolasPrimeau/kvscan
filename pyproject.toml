@@ -1,0 +1,15 @@
+[project]
+name = "kvscan"
+version = "0.1.0"
+description = "Find the layers of an LLM that break under a quantized KV cache, and print the vLLM / llama.cpp flags that fix it"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+dependencies = ["torch>=2.4", "transformers>=5.0", "safetensors", "huggingface_hub", "numpy"]
+
+[project.scripts]
+kvscan = "kvscan.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
